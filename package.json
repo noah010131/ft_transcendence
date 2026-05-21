@@ -1,0 +1,24 @@
+{
+  "scripts": {
+    "up": "docker compose up --build",
+    "down": "docker compose down",
+    "build": "docker compose build",
+    "start": "docker compose start",
+    "stop": "docker compose stop",
+    "restart": "docker compose restart",
+    "logs": "docker compose logs -f",
+    "ps": "docker compose ps",
+    "clean": "docker compose down -v",
+    "status": "docker compose up -d uptime-kuma",
+    "status:open": "echo Status page: http://localhost:3001"
+  },
+  "dependencies": {
+    "@nestjs/config": "^4.0.3",
+    "@nestjs/jwt": "^11.0.2",
+    "axios": "^1.14.0",
+    "passport-jwt": "^4.0.1"
+  },
+  "devDependencies": {
+    "@types/passport-jwt": "^4.0.1"
+  }
+}
