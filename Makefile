@@ -13,7 +13,7 @@
 NAME = transcendence
 COMPOSE = docker compose
 
-DNS ?= f2r7s12
+DNS ?= 10.171.53.16
 
 CERT_DIR = gateway/certs
 KEY_FILE = $(CERT_DIR)/key.pem
@@ -29,7 +29,7 @@ cert:
 			-keyout $(KEY_FILE) \
 			-out $(CERT_FILE) \
 			-subj "/C=FR/ST=IDF/L=Paris/O=42/CN=localhost" \
-			-addext "subjectAltName = DNS:localhost, DNS:$(DNS), IP:127.0.0.1"; \
+			-addext "subjectAltName = DNS:localhost, IP:127.0.0.1, IP:$(DNS)"; \
 		echo "✅ 인증서가 $(CERT_DIR) 내부에 생성되었습니다."; \
 	else \
 		echo "🔒 인증서가 이미 존재합니다. (건너뜀)"; \
