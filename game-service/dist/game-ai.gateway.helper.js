@@ -43,7 +43,7 @@ let GameAiGatewayHelper = class GameAiGatewayHelper {
             return;
         this.pendingAiMatches.delete(socketId);
         await this.gameRedis.deleteSession(pending.session.gameId);
-        //console.log(`[Game][AI] pending session cleaned before ready socketId=${socketId} gameId=${pending.session.gameId}`);
+        console.log(`[Game][AI] pending session cleaned before ready socketId=${socketId} gameId=${pending.session.gameId}`);
     }
     async createAiMatchForSocket(client) {
         const userId = client.data.userId;
@@ -79,7 +79,7 @@ let GameAiGatewayHelper = class GameAiGatewayHelper {
         client.once('disconnect', () => {
             void this.cleanupPendingAiMatch(client.id);
         });
-        //console.log(`[Game][AI] ai match prepared userId=${userId} socketId=${client.id} gameId=${gameId}`);
+        console.log(`[Game][AI] ai match prepared userId=${userId} socketId=${client.id} gameId=${gameId}`);
         return {
             session,
             p1SocketId: client.id,

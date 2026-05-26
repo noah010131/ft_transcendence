@@ -69,7 +69,7 @@ const handleRegister = async () => {
             // setAlertMsg(result.message);
             const translated = (messages.errors as any)[result.message] || messages.errors.SERVER_ERROR;
 	          setAlertMsg(translated);
-	          //console.log("회원가입 실패 사유:", result);
+	          console.log("회원가입 실패 사유:", result);
 	      	}
     } catch (error) {
       console.error("회원가입 에러:", error);

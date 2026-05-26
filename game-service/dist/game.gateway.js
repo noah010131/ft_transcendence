@@ -104,7 +104,7 @@ let GameGateway = class GameGateway {
         client.data.userId = userId;
         client.data.isGuest = isGuest;
         client.data.nickname = this.extractNickname(client);
-        //console.log(`[Game] 연결 성공: userId=${userId}, isGuest=${isGuest}, socketId=${client.id}`);
+        console.log(`[Game] 연결 성공: userId=${userId}, isGuest=${isGuest}, socketId=${client.id}`);
         void this.friendInvite
             .tryFulfillOnConnect(this.server, { userId, socketId: client.id, isGuest })
             .then((match) => {
@@ -135,7 +135,7 @@ let GameGateway = class GameGateway {
         const isGuest = Boolean(client.data.isGuest);
         if (!userId)
             return;
-        //console.log(`[Game] 연결 종료: userId=${userId}, socketId=${client.id}`);
+        console.log(`[Game] 연결 종료: userId=${userId}, socketId=${client.id}`);
         await this.gameAiHelper.cleanupPendingAiMatch(client.id);
         await this.matchmaking.dequeue(userId, isGuest);
         this.friendInvite.cancelInvolvingUser(userId, this.server);
@@ -149,7 +149,7 @@ let GameGateway = class GameGateway {
     }
     async handleSurvivor(leaverUserId, pending) {
         if (!pending.alive) {
-            //console.log(`[Game] pending 양쪽 모두 종료: leaver=${leaverUserId} mode=${pending.mode}`);
+            console.log(`[Game] pending 양쪽 모두 종료: leaver=${leaverUserId} mode=${pending.mode}`);
             return;
         }
         const { userId: aliveUserId, socketId: aliveSocketId, isGuest } = pending.alive;
@@ -160,10 +160,10 @@ let GameGateway = class GameGateway {
                 code: 'INVITE_TARGET_LEFT',
                 message: 'Friend declined or disconnected.',
             });
-            //console.log(`[Game] friend match canceled: leaver=${leaverUserId} survivor=${aliveUserId}`);
+            console.log(`[Game] friend match canceled: leaver=${leaverUserId} survivor=${aliveUserId}`);
             return;
         }
-        //console.log(`[Game] pending 단계 이탈(queue): leaver=${leaverUserId} survivor=${aliveUserId} -> 큐 복귀`);
+        console.log(`[Game] pending 단계 이탈(queue): leaver=${leaverUserId} survivor=${aliveUserId} -> 큐 복귀`);
         const nextMatch = await this.matchmaking.enqueue(aliveUserId, aliveSocketId, isGuest, this.server);
         if (nextMatch) {
             this.gameRuntime.prepareMatch(nextMatch, isGuest, 'queue');
@@ -188,7 +188,7 @@ let GameGateway = class GameGateway {
             });
             return;
         }
-        //console.log(`[Game] join_queue: userId=${userId} isGuest=${isGuest}`);
+        console.log(`[Game] join_queue: userId=${userId} isGuest=${isGuest}`);
         const match = await this.matchmaking.enqueue(userId, client.id, isGuest, this.server);
         if (match) {
             this.gameRuntime.prepareMatch(match, isGuest, 'queue');

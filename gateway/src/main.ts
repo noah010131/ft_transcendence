@@ -232,20 +232,20 @@ async function bootstrap() {
   httpsServer.on('upgrade', handleSocketUpgrade);
 
   httpsServer.listen(8000, () => {
-    //console.log('Gateway HTTPS running on 8000');
+    console.log('Gateway HTTPS running on 8000');
   });
 
   const internalHttpServer = http.createServer(expressApp);
   internalHttpServer.on('upgrade', handleSocketUpgrade);
   internalHttpServer.listen(8080, () => {
-    //console.log('Gateway internal HTTP running on 8080');
+    console.log('Gateway internal HTTP running on 8080');
   });
 
   // daeunki2주석 : 주석이유
   // 기존에는 upgrade 요청을 로그로만 확인하거나 처리하지 않았다.
   // chat/game은 별도 서비스 Socket.IO라 upgrade를 각 proxy.upgrade로 넘겨야 한다.
   // httpsServer.on('upgrade', (request, socket, head) => {
-  // //console.log('[게이트웨이] 웹소켓 업그레이드 요청 감지:', request.url);
+  // console.log('[게이트웨이] 웹소켓 업그레이드 요청 감지:', request.url);
   // });
 }
 
@@ -259,7 +259,7 @@ function authenticateSocketUpgrade(
 ): boolean {
   const token = getCookieValue(req.headers.cookie, 'accessToken');
   if (!token) {
-    //console.log('[게이트웨이] 소켓 upgrade 인증 실패 -> ACCESS_TOKEN_REQUIRED');
+    console.log('[게이트웨이] 소켓 upgrade 인증 실패 -> ACCESS_TOKEN_REQUIRED');
     socket.destroy();
     return false;
   }
@@ -277,7 +277,7 @@ function authenticateSocketUpgrade(
     }
     return true;
   } catch {
-    //console.log('[게이트웨이] 소켓 upgrade 인증 실패 -> ACCESS_TOKEN_INVALID');
+    console.log('[게이트웨이] 소켓 upgrade 인증 실패 -> ACCESS_TOKEN_INVALID');
     socket.destroy();
     return false;
   }
@@ -308,12 +308,12 @@ function createAccessTokenMiddleware(
     const token = req.cookies?.accessToken;
     const isSocket = req.path.includes('socket.io'); // 소켓 요청인지 확인
 
-//  //console.log('[게이트웨이] 액세스 토큰 검사 시작', { path: req.path,hasAccessToken: Boolean(req.cookies?.accessToken), });
+//  console.log('[게이트웨이] 액세스 토큰 검사 시작', { path: req.path,hasAccessToken: Boolean(req.cookies?.accessToken), });
 
     
     if (!token)
     {
-      //console.log('[게이트웨이] 액세스 토큰 없음 -> ACCESS_TOKEN_REQUIRED 반환');
+      console.log('[게이트웨이] 액세스 토큰 없음 -> ACCESS_TOKEN_REQUIRED 반환');
       return res.status(401).json({
         success: false,
         message: 'ACCESS_TOKEN_REQUIRED',
@@ -325,7 +325,7 @@ function createAccessTokenMiddleware(
       const userId = String(payload.sub ?? '');
       req.headers['x-user-id'] = userId;
 
-//      //console.log('[게이트웨이] 액세스 토큰 검증 성공', { sub: payload.sub });
+//      console.log('[게이트웨이] 액세스 토큰 검증 성공', { sub: payload.sub });
 
       if (payload.id) {
         req.headers['x-user-login-id'] = payload.id as string;
@@ -342,10 +342,10 @@ function createAccessTokenMiddleware(
     catch (error)
     {
       if (isSocket) {
-        //console.log('[게이트웨이] 소켓 인증 실패 -> 연결 강제 종료');
+        console.log('[게이트웨이] 소켓 인증 실패 -> 연결 강제 종료');
         return req.destroy(); // JSON 응답 없이 스트림을 파괴 (에러 폭발 방지)
       }
-      //console.log('[게이트웨이] 액세스 토큰 검증 실패 -> ACCESS_TOKEN_INVALID');
+      console.log('[게이트웨이] 액세스 토큰 검증 실패 -> ACCESS_TOKEN_INVALID');
       return res.status(401).json({
         success: false,
         message: 'ACCESS_TOKEN_INVALID',

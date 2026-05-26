@@ -30,7 +30,7 @@ let ChatService = class ChatService {
                 receiverId: to,
                 content: message,
             });
-            //console.log(`[Service] 메시지 DB 저장 성공 (ID: ${chatLog.id})`);
+            console.log(`[Service] 메시지 DB 저장 성공 (ID: ${chatLog.id})`);
             return chatLog;
         }
         catch (error) {
@@ -41,7 +41,7 @@ let ChatService = class ChatService {
     async saveSocketId(userId, socketId) {
         try {
             await this.redis.set(`user:socket:${userId}`, socketId, 'EX', 86400);
-            //console.log(`[Redis] 유저 ${userId} 상태 저장 (Socket: ${socketId})`);
+            console.log(`[Redis] 유저 ${userId} 상태 저장 (Socket: ${socketId})`);
         }
         catch (error) {
             console.error(`[Redis Error] saveSocketId 실패: ${error.message}`);
@@ -50,7 +50,7 @@ let ChatService = class ChatService {
     async removeSocketId(userId) {
         try {
             await this.redis.del(`user:socket:${userId}`);
-            //console.log(`[Redis] 유저 ${userId} 상태 삭제 완료`);
+            console.log(`[Redis] 유저 ${userId} 상태 삭제 완료`);
         }
         catch (error) {
             console.error(`[Redis Error] removeSocketId 실패: ${error.message}`);
@@ -68,7 +68,7 @@ let ChatService = class ChatService {
     }
     async getDmHistory(myId, targetId) {
         try {
-            //console.log(`[Service] History 조회 요청: ${myId} <-> ${targetId}`);
+            console.log(`[Service] History 조회 요청: ${myId} <-> ${targetId}`);
             return await this.chatRepo.findDmHistory(myId, targetId);
         }
         catch (error) {
@@ -78,7 +78,7 @@ let ChatService = class ChatService {
     }
     async getUserStatus(userId) {
         try {
-            //console.log('USER STATUS Called');
+            console.log('USER STATUS Called');
             const response = await axios_1.default.get(`${this.presenceApiUrl}/${userId}`);
             return response.data.publicStatus || 'OFFLINE';
         }

@@ -50,13 +50,13 @@ setMatchInfo(null);
   setGameResult(null);
   setQueueError(null);
   isReadySent.current = false;
-  // //console.log('[Game Hook] 모든 게임 데이터가 초기화되었습니다.');
+  // console.log('[Game Hook] 모든 게임 데이터가 초기화되었습니다.');
 }, []);
   
  // 대기열 추가
 // const joinQueue = useCallback(() => {
 //  if (socketRef.current && isConnected) {
-//    //console.log('[Game Socket] 대기열 등록 시도:', currentUserId);
+//    console.log('[Game Socket] 대기열 등록 시도:', currentUserId);
 //    socketRef.current.emit('join_queue');
 //  } else {
 //    console.error('[Game Socket] 소켓이 연결되지 않았습니다.');
@@ -72,7 +72,7 @@ const joinQueue = useCallback(() => {
   }
 
   if (socketRef.current && isConnected) {
-    //console.log('[Game Socket] 대기열 등록 시도:', currentUserId);
+    console.log('[Game Socket] 대기열 등록 시도:', currentUserId);
     socketRef.current.emit('join_queue');
   } else {
     console.error('[Game Socket] 소켓이 연결되지 않았습니다.');
@@ -81,7 +81,7 @@ const joinQueue = useCallback(() => {
 
 const aiGame= useCallback(() => {
   if (socketRef.current && isConnected) {
-    //console.log('[Game Socket] AI 게임 시작 요청');
+    console.log('[Game Socket] AI 게임 시작 요청');
     // 서버와 약속한 AI 전용 이벤트 송신
     // suna : 기존 payload 없는 emit 보존.
     // socketRef.current.emit('start_ai_game');
@@ -99,12 +99,12 @@ const inviteFriend = useCallback((targetUserId: string) => {
     return;
   }
   if (socket.connected) {
-    //console.log('[Game Socket] invite_friend 송신:', targetUserId);
+    console.log('[Game Socket] invite_friend 송신:', targetUserId);
     socket.emit('invite_friend', { targetUserId });
     return;
   }
   // 아직 연결 전 (activateGameSocket 직후): 연결되면 한 번만 송신.
-  //console.log('[Game Socket] 소켓 연결 대기 후 invite_friend 송신 예약:', targetUserId);
+  console.log('[Game Socket] 소켓 연결 대기 후 invite_friend 송신 예약:', targetUserId);
   const onceConnected = () => {
     socket.emit('invite_friend', { targetUserId });
   };
@@ -114,7 +114,7 @@ const inviteFriend = useCallback((targetUserId: string) => {
 //패들 이동
 const movePaddle = useCallback((direction: 'up' | 'down') => {
   if (socketRef.current && isConnected) {
-  //  //console.log('[Game Socket] move paddle');
+  //  console.log('[Game Socket] move paddle');
     socketRef.current.emit('move_paddle', { direction });
   }
 }, [isConnected]);
@@ -122,7 +122,7 @@ const movePaddle = useCallback((direction: 'up' | 'down') => {
 const sendReady = useCallback(() => {
   if (isReadySent.current) return;
   if (socketRef.current && isConnected) {
-    //console.log('[Game Socket] 게임 준비 완료(ready) 송신');
+    console.log('[Game Socket] 게임 준비 완료(ready) 송신');
     socketRef.current.emit('ready');
   } else {
     console.warn('[Game Socket] 소켓이 연결되지 않아 ready를 보낼 수 없습니다.');
@@ -137,7 +137,7 @@ const sendReady = useCallback(() => {
     // 연결하면 안 되는 조건일 때 정직하게 클린업 후 종료
     if (!shouldConnect || !isValidUser || !isValidNickname) {
       if (socketRef.current) {
-        //console.log('[Game Socket] 조건 미충족으로 인한 소켓 연결 종료(클린업)');
+        console.log('[Game Socket] 조건 미충족으로 인한 소켓 연결 종료(클린업)');
         socketRef.current.disconnect();
         socketRef.current = null;
       }
@@ -150,7 +150,7 @@ const sendReady = useCallback(() => {
 
     // 이미 활성화된 소켓이 정상 작동 중이면 중복 생성 차단
     if (socketRef.current?.connected) {
-      //console.log('[Game Socket] 이미 활성화된 소켓 유지');
+      console.log('[Game Socket] 이미 활성화된 소켓 유지');
       return;
     }
    
@@ -181,7 +181,7 @@ const sendReady = useCallback(() => {
 
     socket.on('connect', () => {
 	  setIsConnected(true);
-      //console.log('[Game Socket] 게이트웨이 인증 통과 및 연결 성공');
+      console.log('[Game Socket] 게이트웨이 인증 통과 및 연결 성공');
     });
 
     socket.on('connect_error', (err) => {
@@ -197,7 +197,7 @@ const sendReady = useCallback(() => {
 	
 	  socket.on('disconnect', (reason) => {
       setIsConnected(false);
-      //console.log('[Game Socket] 연결 종료 사유:', reason);
+      console.log('[Game Socket] 연결 종료 사유:', reason);
       
       // 서버에 의해 강제로 끊긴 경우(io server disconnect) 자동 재연결 안 함
       if (reason === 'io server disconnect') {
@@ -212,14 +212,14 @@ const sendReady = useCallback(() => {
     // 이유: 매칭 성공 시 서버가 각 클라이언트에게 자기 side를 박아 보낸다. 페이로드 그대로 보관.
     // 다음 페이지 전환(예: /game/{gameId}) 은 이 훅을 사용하는 컴포넌트가 matchInfo 변화를 감지해 처리.
     socket.on('match_found', (info: MatchInfo) => {
-      //console.log('[Game Socket] match_found 수신:', info);
+      console.log('[Game Socket] match_found 수신:', info);
       setMatchInfo(info);
     });
 
     // suna : 상대가 ready 전에 ESC/disconnect 했을 때 서버가 보내는 신호.
     // matchInfo 를 비워 모달이 "찾는 중" 상태로 되돌아가게 하고, 서버는 알아서 다시 큐에 넣는다.
     socket.on('match_canceled', () => {
-      //console.log('[Game Socket] match_canceled 수신: 상대 이탈, 재매칭 대기');
+      console.log('[Game Socket] match_canceled 수신: 상대 이탈, 재매칭 대기');
       setMatchInfo(null);
     });
 
@@ -233,7 +233,7 @@ const sendReady = useCallback(() => {
     // merge수정 : main의 match_found/queue_error 리스너를 유지하면서 daeunki2의 game_over 리스너를 추가함.
 	// Game Over 리스너
     socket.on('game_over', (result: GameResult) => {
-      //console.log('[Game Socket] 게임 종료 수신:', result);
+      console.log('[Game Socket] 게임 종료 수신:', result);
       setGameResult(result);
       
       // 게임이 종료되었으니 불필요한 game_state 수신은 끊어줍니다.
@@ -248,7 +248,7 @@ const sendReady = useCallback(() => {
     // 클린업 (언마운트 시 소켓 종료)
     return () => {
       if (socketRef.current) {
-        //console.log('[Game Socket] 소켓 연결 종료');
+        console.log('[Game Socket] 소켓 연결 종료');
         socketRef.current.removeAllListeners(); // 모든 리스너
         socketRef.current.disconnect();
         socketRef.current = null;

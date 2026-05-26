@@ -36,7 +36,7 @@ export default function GamePage() {
 	useEffect(() => {
         // 소켓이 연결되어 있고, 아직 게임 결과가 안 나왔으며, 매칭 정보가 존재할 때 1회 송신
         if (isConnected && matchInfo && !gameResult) {
-            //console.log('[GamePage] 인게임 페이지 로드 완료 ➡️ sendReady 실행');
+            console.log('[GamePage] 인게임 페이지 로드 완료 ➡️ sendReady 실행');
             sendReady(); 
         }
     }, [isConnected, matchInfo, gameResult, sendReady]);

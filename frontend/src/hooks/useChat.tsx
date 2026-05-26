@@ -38,7 +38,7 @@ export const useChat = (targetId: string | null, currentUserId: string | null) =
   if (!targetId) return;
   try {
     const response = await chatService.getHistory(targetId);
-    //console.log('[Chat] 가져온 히스토리 데이터:', response);
+    console.log('[Chat] 가져온 히스토리 데이터:', response);
 
     // 🛠️ 수정: 객체 형태를 배열로 변환하거나, 배열이 맞는지 다시 확인
     let historyArray = [];
@@ -74,7 +74,7 @@ export const useChat = (targetId: string | null, currentUserId: string | null) =
     return;
   }
 
-    //console.log('front chat start');
+    console.log('front chat start');
     // 마운트 시 히스토리 먼저 가져오기
     loadHistory();
     // 주석 이유: 상태 초기화는 usePresenceStatus가 담당하므로 chat HTTP 초기 조회 호출은 비활성화한다.
@@ -104,7 +104,7 @@ export const useChat = (targetId: string | null, currentUserId: string | null) =
 
     socket.on('connect', () => {
       setIsConnected(true);
-      //console.log('[Chat Socket] 게이트웨이 인증 통과 및 연결 성공');
+      console.log('[Chat Socket] 게이트웨이 인증 통과 및 연결 성공');
     });
 
     // 주석 이유 : 상태의 단일 소스를 presence 소켓으로 통일하기 위해 chat 소켓 상태 이벤트는 비활성화
@@ -112,7 +112,7 @@ export const useChat = (targetId: string | null, currentUserId: string | null) =
     //   // 지금 대화 중인 상대방의 상태가 바뀐 경우에만 업데이트
     //   if (data.userId === targetId) {
     //     setTargetStatus(data.status);
-    //     //console.log(`[Presence] ${targetId}님의 상태 변경: ${data.status}`);
+    //     console.log(`[Presence] ${targetId}님의 상태 변경: ${data.status}`);
     //   }
     // });
 
@@ -143,7 +143,7 @@ export const useChat = (targetId: string | null, currentUserId: string | null) =
 
     socket.on('disconnect', (reason) => {
       setIsConnected(false);
-      //console.log('[Chat Socket] 연결 종료 사유:', reason);
+      console.log('[Chat Socket] 연결 종료 사유:', reason);
       
       // 서버에 의해 강제로 끊긴 경우(io server disconnect) 자동 재연결 안 함
       if (reason === 'io server disconnect') {
@@ -153,7 +153,7 @@ export const useChat = (targetId: string | null, currentUserId: string | null) =
 
     return () => {
       if (socketRef.current) {
-        //console.log('[Chat] 소켓 연결 종료');
+        console.log('[Chat] 소켓 연결 종료');
         socketRef.current.removeAllListeners(); // 모든 리스너
         socketRef.current.disconnect();
         socketRef.current = null;
@@ -163,8 +163,8 @@ export const useChat = (targetId: string | null, currentUserId: string | null) =
 
   // 3. 메시지 전송 함수
   const sendMessage = useCallback((content: string) => {
-    //console.log('[보내기 시도] 소켓 존재여부:', !!socketRef.current);
-    //console.log('[보내기 시도] 소켓 연결상태:', socketRef.current?.connected);
+    console.log('[보내기 시도] 소켓 존재여부:', !!socketRef.current);
+    console.log('[보내기 시도] 소켓 연결상태:', socketRef.current?.connected);
 
     if (!socketRef.current || !targetId || !content.trim())
         return;

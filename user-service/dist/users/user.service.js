@@ -79,7 +79,7 @@ let UserService = class UserService {
                 userPhoto: DEFAULT_PHOTO_PATH,
                 role,
             });
-            //console.log('유저 db생성', { id, role });
+            console.log('유저 db생성', { id, role });
             return await this.userRepository.save(newUser);
         }
         catch (error) {
@@ -107,13 +107,13 @@ let UserService = class UserService {
             if (fileName) {
                 const filePath = (0, path_1.join)(process.cwd(), 'uploads', fileName);
                 if (!fs.existsSync(filePath)) {
-                    //console.log(`📂 파일 없음: ${fileName}. 기본값으로 복구.`);
+                    console.log(`📂 파일 없음: ${fileName}. 기본값으로 복구.`);
                     user.userPhoto = DEFAULT_PHOTO_PATH;
                     await this.userRepository.save(user);
                 }
             }
         }
-        //console.log('[getme] 성공', user.nickname);
+        console.log('[getme] 성공', user.nickname);
         return user;
     }
     async updateProfile(userId, data) {
@@ -139,7 +139,7 @@ let UserService = class UserService {
             ...(data.userPhoto !== undefined && { userPhoto: data.userPhoto }),
             ...(data.nickname !== undefined && { nickname: data.nickname }),
         });
-        //console.log('[updateProfile] update 성공', user.userPhoto);
+        console.log('[updateProfile] update 성공', user.userPhoto);
         return await this.userRepository.findOne({ where: { userId: user.userId } });
     }
     async deleteGuestUser(userId) {

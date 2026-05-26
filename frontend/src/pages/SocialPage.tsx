@@ -132,7 +132,7 @@ function SocialPage() {
 
   // 친구 요청 보내기
   const handleSendRequest = async () => {
-    //console.log('[친구추가] 버튼 클릭됨, currentUserId:', currentUserId);
+    console.log('[친구추가] 버튼 클릭됨, currentUserId:', currentUserId);
     if (currentUserId === null) {
       console.warn('[친구추가] currentUserId가 null이라 중단');
       return;

@@ -72,7 +72,7 @@ export class PresenceSocketGateway implements OnGatewayConnection, OnGatewayDisc
       client.on('presence.heartbeat', async () => {
         await this.presenceService.markHeartbeat(userId, client.id);
       });
-      //console.log('[PresenceWS] connected', {
+      console.log('[PresenceWS] connected', {
         userId,
         socketId: client.id,
       });
@@ -90,7 +90,7 @@ export class PresenceSocketGateway implements OnGatewayConnection, OnGatewayDisc
     const userId = this.socketUserMap.get(client.id);
     if (!userId) return;
     this.socketUserMap.delete(client.id);
-    //console.log('[PresenceWS] disconnected', {
+    console.log('[PresenceWS] disconnected', {
       userId,
       socketId: client.id,
     });

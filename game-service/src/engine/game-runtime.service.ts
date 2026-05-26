@@ -344,7 +344,7 @@ export class GameRuntimeService {
       session.state.score1 !== prevScore1 ||
       session.state.score2 !== prevScore2
     ) {
-      //console.log(
+      console.log(
         `[Game] score changed: gameId=${gameId} ${prevScore1}:${prevScore2} -> ${session.state.score1}:${session.state.score2}`,
       );
     }

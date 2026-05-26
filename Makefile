@@ -13,11 +13,7 @@
 NAME = transcendence
 COMPOSE = docker compose
 
-<<<<<<< HEAD
-DNS ?= 10.171.53.16
-=======
-DNS ?= f1br3s3
->>>>>>> 4871fb2 (remove_log)
+DNS ?= 10.171.61.232
 
 CERT_DIR = gateway/certs
 KEY_FILE = $(CERT_DIR)/key.pem

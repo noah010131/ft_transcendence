@@ -158,7 +158,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect {
     client.data.isGuest = isGuest;
     // daeunki2 수정 : Runtime 서비스가 게임 기록 저장에 사용할 nickname을 socket data에 보관한다.
     client.data.nickname = this.extractNickname(client);
-    //console.log(
+    console.log(
       `[Game] 연결 성공: userId=${userId}, isGuest=${isGuest}, socketId=${client.id}`,
     );
 
@@ -199,7 +199,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect {
     const isGuest: boolean = Boolean(client.data.isGuest);
     if (!userId) return;
 
-    //console.log(`[Game] 연결 종료: userId=${userId}, socketId=${client.id}`);
+    console.log(`[Game] 연결 종료: userId=${userId}, socketId=${client.id}`);
 
     // ai용 추가
     await this.gameAiHelper.cleanupPendingAiMatch(client.id);
@@ -234,7 +234,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect {
     pending: Awaited<ReturnType<GameRuntimeService['handlePendingDisconnect']>>,
   ): Promise<void> {
     if (!pending.alive) {
-      //console.log(`[Game] pending 양쪽 모두 종료: leaver=${leaverUserId} mode=${pending.mode}`);
+      console.log(`[Game] pending 양쪽 모두 종료: leaver=${leaverUserId} mode=${pending.mode}`);
       return;
     }
     const { userId: aliveUserId, socketId: aliveSocketId, isGuest } = pending.alive;
@@ -252,11 +252,11 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect {
         code: 'INVITE_TARGET_LEFT',
         message: 'Friend declined or disconnected.',
       });
-      //console.log(`[Game] friend match canceled: leaver=${leaverUserId} survivor=${aliveUserId}`);
+      console.log(`[Game] friend match canceled: leaver=${leaverUserId} survivor=${aliveUserId}`);
       return;
     }
 
-    //console.log(
+    console.log(
       `[Game] pending 단계 이탈(queue): leaver=${leaverUserId} survivor=${aliveUserId} -> 큐 복귀`,
     );
 
@@ -301,7 +301,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect {
       return;
     }
 
-    //console.log(`[Game] join_queue: userId=${userId} isGuest=${isGuest}`);
+    console.log(`[Game] join_queue: userId=${userId} isGuest=${isGuest}`);
     // await this.matchmaking.enqueue(userId, client.id, isGuest, this.server); >> 매창까지만 하는 로직
     const match = await this.matchmaking.enqueue(userId, client.id, isGuest, this.server);
     if (match) {

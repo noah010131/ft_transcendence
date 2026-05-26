@@ -68,7 +68,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     // Case A: 사용자가 로그아웃했을 때
     if (!user) {
-      // //console.log('[GameProvider] 사용자가 로그아웃하여 세션을 정리합니다.');
+      // console.log('[GameProvider] 사용자가 로그아웃하여 세션을 정리합니다.');
       setShouldConnect(false);
       setModalOpen(false);
       setModalContext(null);
@@ -81,7 +81,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
 
     // Case B: 게임 결과(gameResult)가 나왔을 때 즉시 소켓 종료
     if (game.gameResult) {
-      //console.log('[GameProvider] 게임 종료 감지: 소켓 연결을 해제합니다.');
+      console.log('[GameProvider] 게임 종료 감지: 소켓 연결을 해제합니다.');
       setShouldConnect(false);
       // 참고: game.resetGameState()는 결과 화면을 보여줘야 하므로
       // 여기서 바로 부르지 말고, 유저가 '확인' 버튼을 누르거나 페이지를 나갈 때 부르는 게 좋습니다.
@@ -175,7 +175,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     const handler = (evt: Event) => {
       const detail = (evt as CustomEvent<GameInvitePayload>).detail;
       if (!detail) return;
-      //console.log('[GameProvider] 친구 초대 수신:', detail);
+      console.log('[GameProvider] 친구 초대 수신:', detail);
       setReadySent(false);
       setInvitedFrom(detail.inviterNickname || detail.inviterUserId);
       setModalContext('invited');

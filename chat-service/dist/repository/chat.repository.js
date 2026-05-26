@@ -25,7 +25,7 @@ let ChatRepository = class ChatRepository {
         try {
             const newMessage = this.repo.create(data);
             const savedMessage = await this.repo.save(newMessage);
-            //console.log(`[Repository] DB 저장 성공: ID ${savedMessage.id} (From: ${savedMessage.senderId} -> To: ${savedMessage.receiverId})`);
+            console.log(`[Repository] DB 저장 성공: ID ${savedMessage.id} (From: ${savedMessage.senderId} -> To: ${savedMessage.receiverId})`);
             return savedMessage;
         }
         catch (error) {
@@ -39,7 +39,7 @@ let ChatRepository = class ChatRepository {
                 where: { receiverId: userId },
                 order: { createdAt: 'ASC' },
             });
-            //console.log(`[Repository] 유저 ${userId}의 미확인 메시지 ${messages.length}건 조회 완료`);
+            console.log(`[Repository] 유저 ${userId}의 미확인 메시지 ${messages.length}건 조회 완료`);
             return messages;
         }
         catch (error) {
@@ -56,7 +56,7 @@ let ChatRepository = class ChatRepository {
                 ],
                 order: { createdAt: 'ASC' },
             });
-            //console.log(`[Repository] ${userA}-${userB} 대화 내역 ${history.length}건 조회 성공`);
+            console.log(`[Repository] ${userA}-${userB} 대화 내역 ${history.length}건 조회 성공`);
             return history;
         }
         catch (error) {

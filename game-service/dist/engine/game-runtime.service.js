@@ -193,7 +193,7 @@ let GameRuntimeService = class GameRuntimeService {
         session.state = this.engine.updateTick(session.state);
         if (session.state.score1 !== prevScore1 ||
             session.state.score2 !== prevScore2) {
-            //console.log(`[Game] score changed: gameId=${gameId} ${prevScore1}:${prevScore2} -> ${session.state.score1}:${session.state.score2}`);
+            console.log(`[Game] score changed: gameId=${gameId} ${prevScore1}:${prevScore2} -> ${session.state.score1}:${session.state.score2}`);
         }
         this.emitGameState(session, server);
         const result = this.engine.getGameResultIfOver(session.state, session.p1UserId, session.p2UserId);

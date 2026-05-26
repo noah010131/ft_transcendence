@@ -59,7 +59,7 @@ let UserController = class UserController {
         if (!currentUserId) {
             throw new common_1.UnauthorizedException('[getMe] 인증 정보가 없습니다.');
         }
-        //console.log('[getme] 입장');
+        console.log('[getme] 입장');
         const user = await this.userService.getMe(currentUserId);
         if (!user) {
             throw new common_1.NotFoundException('[getMe] 유저를 찾을 수 없습니다.');

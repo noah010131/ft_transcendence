@@ -49,8 +49,6 @@ const handleLogin = async () => {
   
 		if (result.success === true) {
 		setUser(result.user);
-	  	//console.log('로그인 성공:', result.message);
-	  	//console.log('토큰:', result.accessToken);
 	  
 		await fetchMe();
 	  	navigate('/home');

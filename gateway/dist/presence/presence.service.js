@@ -53,7 +53,7 @@ let PresenceService = class PresenceService {
                 return;
             await this.handleRawEvent(event);
         });
-        //console.log('[presence] subscribed channel:', presence_types_1.PRESENCE_RAW_CHANNEL);
+        console.log('[presence] subscribed channel:', presence_types_1.PRESENCE_RAW_CHANNEL);
     }
     startHeartbeatReconciler() {
         if (this.heartbeatSweepTimer)

@@ -58,7 +58,7 @@ let ChatGateway = class ChatGateway {
                         userId: event.userId,
                         status: event.publicStatus,
                     });
-                    //console.log(`Subscription [Presence Update] User ${event.userId} is now ${event.publicStatus}`);
+                    console.log(`Subscription [Presence Update] User ${event.userId} is now ${event.publicStatus}`);
                 }
                 catch (error) {
                     console.error(`[Redis Sub Error] 메시지 파싱 실패: ${error.message}`);
@@ -67,7 +67,7 @@ let ChatGateway = class ChatGateway {
         });
     }
     async handleConnection(client) {
-        //console.log('소캣 chat-gateway 도착');
+        console.log('소캣 chat-gateway 도착');
         try {
             const userId = this.extractUserId(client);
             if (!userId) {
@@ -78,11 +78,11 @@ let ChatGateway = class ChatGateway {
             client.data.userId = userId;
             await this.chatService.saveSocketId(userId, client.id);
             this.activeUsersCount++;
-            //console.log(`[Chat] 유저 온라인: ${userId} (현재 접속자: ${this.activeUsersCount})`);
+            console.log(`[Chat] 유저 온라인: ${userId} (현재 접속자: ${this.activeUsersCount})`);
             if (this.activeUsersCount === 1 && !this.isSubscribed) {
                 await this.redisSub.subscribe(presence_types_1.PRESENCE_UPDATED_CHANNEL);
                 this.isSubscribed = true;
-                //console.log('[Redis] 첫 채팅 유저 접속 - 구독 활성화');
+                console.log('[Redis] 첫 채팅 유저 접속 - 구독 활성화');
             }
         }
         catch (error) {
@@ -99,12 +99,12 @@ let ChatGateway = class ChatGateway {
             return;
         }
         try {
-            //console.log(`[DM Request] From: ${from} -> To: ${to}`);
+            console.log(`[DM Request] From: ${from} -> To: ${to}`);
             const chatLog = await this.chatService.processMessage(from, to, message);
             const targetSocketId = await this.chatService.getUserSocketId(to);
             if (targetSocketId) {
                 this.server.to(targetSocketId).emit('new_dm', chatLog);
-                //console.log(`[Real-time Push] Sent to ${to}`);
+                console.log(`[Real-time Push] Sent to ${to}`);
             }
             client.emit('send_success', { messageId: chatLog.id });
         }
@@ -119,12 +119,12 @@ let ChatGateway = class ChatGateway {
             try {
                 await this.chatService.removeSocketId(userId);
                 this.activeUsersCount--;
-                //console.log(`[Disconnected] User: ${userId} (남은 접속자: ${this.activeUsersCount})`);
+                console.log(`[Disconnected] User: ${userId} (남은 접속자: ${this.activeUsersCount})`);
                 if (this.activeUsersCount <= 0 && this.isSubscribed) {
                     await this.redisSub.unsubscribe(presence_types_1.PRESENCE_UPDATED_CHANNEL);
                     this.isSubscribed = false;
                     this.activeUsersCount = 0;
-                    //console.log('[Redis] 접속 유저 없음 - 구독 해제');
+                    console.log('[Redis] 접속 유저 없음 - 구독 해제');
                 }
             }
             catch (err) {

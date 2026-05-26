@@ -29,7 +29,7 @@ export const useGameHistory = (userId: string | null) => {
     setErrorKey(null);
 
     try {
-      //console.log('[fetch history]');
+      console.log('[fetch history]');
       const data = await gameService.fetchHistory(userId);
 
       if (Array.isArray(data)) {

@@ -151,18 +151,18 @@ async function bootstrap() {
     };
     httpsServer.on('upgrade', handleSocketUpgrade);
     httpsServer.listen(8000, () => {
-        //console.log('Gateway HTTPS running on 8000');
+        console.log('Gateway HTTPS running on 8000');
     });
     const internalHttpServer = http.createServer(expressApp);
     internalHttpServer.on('upgrade', handleSocketUpgrade);
     internalHttpServer.listen(8080, () => {
-        //console.log('Gateway internal HTTP running on 8080');
+        console.log('Gateway internal HTTP running on 8080');
     });
 }
 function authenticateSocketUpgrade(req, socket, jwtService) {
     const token = getCookieValue(req.headers.cookie, 'accessToken');
     if (!token) {
-        //console.log('[게이트웨이] 소켓 upgrade 인증 실패 -> ACCESS_TOKEN_REQUIRED');
+        console.log('[게이트웨이] 소켓 upgrade 인증 실패 -> ACCESS_TOKEN_REQUIRED');
         socket.destroy();
         return false;
     }
@@ -182,7 +182,7 @@ function authenticateSocketUpgrade(req, socket, jwtService) {
         return true;
     }
     catch {
-        //console.log('[게이트웨이] 소켓 upgrade 인증 실패 -> ACCESS_TOKEN_INVALID');
+        console.log('[게이트웨이] 소켓 upgrade 인증 실패 -> ACCESS_TOKEN_INVALID');
         socket.destroy();
         return false;
     }
@@ -205,7 +205,7 @@ function createAccessTokenMiddleware(jwtService) {
         const token = req.cookies?.accessToken;
         const isSocket = req.path.includes('socket.io');
         if (!token) {
-            //console.log('[게이트웨이] 액세스 토큰 없음 -> ACCESS_TOKEN_REQUIRED 반환');
+            console.log('[게이트웨이] 액세스 토큰 없음 -> ACCESS_TOKEN_REQUIRED 반환');
             return res.status(401).json({
                 success: false,
                 message: 'ACCESS_TOKEN_REQUIRED',
@@ -228,10 +228,10 @@ function createAccessTokenMiddleware(jwtService) {
         }
         catch (error) {
             if (isSocket) {
-                //console.log('[게이트웨이] 소켓 인증 실패 -> 연결 강제 종료');
+                console.log('[게이트웨이] 소켓 인증 실패 -> 연결 강제 종료');
                 return req.destroy();
             }
-            //console.log('[게이트웨이] 액세스 토큰 검증 실패 -> ACCESS_TOKEN_INVALID');
+            console.log('[게이트웨이] 액세스 토큰 검증 실패 -> ACCESS_TOKEN_INVALID');
             return res.status(401).json({
                 success: false,
                 message: 'ACCESS_TOKEN_INVALID',

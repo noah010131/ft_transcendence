@@ -13,6 +13,6 @@ async function bootstrap() {
 });
 
   await app.listen(process.env.PORT ?? 4001);
-  //console.log('connect success with port 4001');
+  console.log('connect success with port 4001');
 }
 bootstrap();

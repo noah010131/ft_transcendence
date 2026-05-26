@@ -83,7 +83,7 @@ let PresenceSocketGateway = class PresenceSocketGateway {
             client.on('presence.heartbeat', async () => {
                 await this.presenceService.markHeartbeat(userId, client.id);
             });
-            //console.log('[PresenceWS] connected', {
+            console.log('[PresenceWS] connected', {
                 userId,
                 socketId: client.id,
             });
@@ -99,7 +99,7 @@ let PresenceSocketGateway = class PresenceSocketGateway {
         if (!userId)
             return;
         this.socketUserMap.delete(client.id);
-        //console.log('[PresenceWS] disconnected', {
+        console.log('[PresenceWS] disconnected', {
             userId,
             socketId: client.id,
         });

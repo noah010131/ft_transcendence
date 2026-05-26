@@ -74,7 +74,7 @@ export class PresenceService implements OnModuleDestroy {
       if (!event) return;
       await this.handleRawEvent(event);
     });
-    //console.log('[presence] subscribed channel:', PRESENCE_RAW_CHANNEL);
+    console.log('[presence] subscribed channel:', PRESENCE_RAW_CHANNEL);
   }
 
   // 6. heartbeat 관련
