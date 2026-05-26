@@ -8,6 +8,6 @@ async function bootstrap() {
   app.use(cookieParser());
 
   await app.listen(process.env.PORT ?? 4000);
-  console.log('connect success with port 4000');
+  //console.log('connect success with port 4000');
 }
 bootstrap();

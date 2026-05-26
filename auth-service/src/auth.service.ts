@@ -93,7 +93,7 @@ export class AuthService {
     //  refresh_token: null, 테이블을 따로 두어서 이제는 필요 없음
     });
     const savedUser = await this.userRepository.save(newUser); // 인증디비에저장
-		console.log(`[signUp가입 성공: ID ${savedUser.id}`);
+		//console.log(`[signUp가입 성공: ID ${savedUser.id}`);
 
     try {
       await firstValueFrom(
@@ -162,9 +162,9 @@ export class AuthService {
       const refreshTokenMaxAgeMs = this.parseTtlToMs(refreshTtl, this.defaultRefreshTtlMs);
 
       const accessToken = this.jwtService.sign(payload, { expiresIn: accessTokenMaxAgeMs / 1000 });// 실제 토큰 생성
-      console.log('at 토큰 발급 성공');
+      //console.log('at 토큰 발급 성공');
       const refreshToken = this.jwtService.sign(payload, { expiresIn:refreshTokenMaxAgeMs / 1000 });
-      console.log('re 토큰 발급 성공');
+      //console.log('re 토큰 발급 성공');
 
       await this.refreshSessionRepository.save({
         userId: user.id,
@@ -173,9 +173,9 @@ export class AuthService {
         ipAddress: context?.ipAddress ?? null,
         expiresAt: new Date(Date.now() + refreshTokenMaxAgeMs),
       });
-      console.log('re 토큰 저장');
+      //console.log('re 토큰 저장');
 
-      console.log('[login]로그인 성공');
+      //console.log('[login]로그인 성공');
 
       // 성공 시에는 락을 즉시 지우지 않고 TTL로만 유지해
       // 소켓 connected 이벤트 반영 전 짧은 레이스 구간을 줄인다.
@@ -204,25 +204,25 @@ export class AuthService {
   }
 
   async refresh(refreshToken?: string, context?: LoginContext): Promise<LoginResult> {
-    console.log('[인증서비스] refresh 시작');
+    //console.log('[인증서비스] refresh 시작');
     if (!refreshToken) {
-      console.log('[인증서비스] 리프레시 토큰 없음');
+      //console.log('[인증서비스] 리프레시 토큰 없음');
       return { success: false, message: 'REFRESH_TOKEN_REQUIRED' };
     }
 
     const revoked = await this.isRefreshTokenBlacklisted(refreshToken);
-    console.log('[인증서비스] 블랙리스트 조회 완료', { revoked });
+    //console.log('[인증서비스] 블랙리스트 조회 완료', { revoked });
     if (revoked) {
-      console.log('[인증서비스] 블랙리스트에 등록된 토큰');
+      //console.log('[인증서비스] 블랙리스트에 등록된 토큰');
       return { success: false, message: 'REFRESH_TOKEN_REVOKED' };
     }
 
     let oldPayload: { sub: string; id?: string; isGuest?: boolean };
     try {
       oldPayload = this.jwtService.verify<{ sub: string; id?: string; isGuest?: boolean }>(refreshToken);
-      console.log('[인증서비스] 리프레시 토큰 서명 검증 성공');
+      //console.log('[인증서비스] 리프레시 토큰 서명 검증 성공');
     } catch (error) {
-      console.log('[인증서비스] 리프레시 토큰 서명 검증 실패');
+      //console.log('[인증서비스] 리프레시 토큰 서명 검증 실패');
       return { success: false, message: 'REFRESH_TOKEN_INVALID' };
     }
 
@@ -232,12 +232,12 @@ export class AuthService {
     });
 
     if (!session) {
-      console.log('[인증서비스] 리프레시 세션 없음');
+      //console.log('[인증서비스] 리프레시 세션 없음');
       return { success: false, message: 'REFRESH_SESSION_NOT_FOUND' };
     }
 
     if (session.expiresAt.getTime() < Date.now()) {
-      console.log('[인증서비스] 리프레시 세션 만료');
+      //console.log('[인증서비스] 리프레시 세션 만료');
       await this.refreshSessionRepository.delete({ tokenHash });
       return { success: false, message: 'REFRESH_TOKEN_EXPIRED' };
     }
@@ -274,7 +274,7 @@ export class AuthService {
     const newRefreshToken = this.jwtService.sign(newPayload, {
       expiresIn: refreshTokenMaxAgeMs / 1000,
     });
-    console.log('[인증서비스] 새 액세스/리프레시 토큰 발급 완료');
+    //console.log('[인증서비스] 새 액세스/리프레시 토큰 발급 완료');
 
     const previousExpiryMs = session.expiresAt.getTime();
     session.tokenHash = this.hashToken(newRefreshToken);
@@ -283,7 +283,7 @@ export class AuthService {
     session.expiresAt = new Date(Date.now() + refreshTokenMaxAgeMs);
     await this.refreshSessionRepository.save(session);
     await this.addRefreshTokenToBlacklist(refreshToken, previousExpiryMs - Date.now());
-    console.log('[인증서비스] 리프레시 세션 갱신 및 기존 RT 블랙리스트 등록 완료');
+    //console.log('[인증서비스] 리프레시 세션 갱신 및 기존 RT 블랙리스트 등록 완료');
 
     return {
       success: true,
@@ -302,7 +302,7 @@ export class AuthService {
 
   async logout(refreshToken?: string) {
     if (!refreshToken) {
-      console.log('[logout]refreshToken 없음');
+      //console.log('[logout]refreshToken 없음');
       return {
         success: true,
         message: 'LOGOUT_NO_REFRESH_TOKEN',
@@ -320,7 +320,7 @@ export class AuthService {
       if (owner?.role === 'guest') {
         await this.deleteGuestFully(owner.id);
         await this.addRefreshTokenToBlacklist(refreshToken);
-        console.log('[logout]게스트 풀 정리 완료', { id: owner.id });
+        //console.log('[logout]게스트 풀 정리 완료', { id: owner.id });
         return { success: true, message: 'LOGOUT_SUCCESS' };
       }
     }
@@ -329,7 +329,7 @@ export class AuthService {
     await this.refreshSessionRepository.delete({ tokenHash });
     await this.addRefreshTokenToBlacklist(refreshToken);
 
-    console.log('[logout]로그아웃 성공');
+    //console.log('[logout]로그아웃 성공');
     return {
       success: true,
       message: 'LOGOUT_SUCCESS',
@@ -380,7 +380,7 @@ export class AuthService {
       role: 'guest',
     });
     const savedAuth = await this.userRepository.save(newAuth);
-    console.log(`[guest] auth row 생성: ${savedAuth.id}`);
+    //console.log(`[guest] auth row 생성: ${savedAuth.id}`);
 
     // user-service 에 프로필 row 생성. 닉네임 충돌(NICKNAME_ALREADY_EXISTS)만 재시도.
     const MAX_NICKNAME_RETRIES = 5;
@@ -445,7 +445,7 @@ export class AuthService {
       expiresAt: new Date(Date.now() + refreshTokenMaxAgeMs),
     });
 
-    console.log('[guest] 게스트 토큰 발급 완료', {
+    //console.log('[guest] 게스트 토큰 발급 완료', {
       userId: savedAuth.id,
       nickname,
     });

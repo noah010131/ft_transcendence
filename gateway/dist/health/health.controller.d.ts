@@ -1,0 +1,8 @@
+import { HealthCheckService, HttpHealthIndicator } from '@nestjs/terminus';
+export declare class HealthController {
+    private readonly health;
+    private readonly http;
+    constructor(health: HealthCheckService, http: HttpHealthIndicator);
+    liveness(): Promise<import("@nestjs/terminus").HealthCheckResult<import("@nestjs/terminus").HealthIndicatorResult<string, import("@nestjs/terminus").HealthIndicatorStatus, Record<string, any>>, Partial<import("@nestjs/terminus").HealthIndicatorResult<string, import("@nestjs/terminus").HealthIndicatorStatus, Record<string, any>>> | undefined, Partial<import("@nestjs/terminus").HealthIndicatorResult<string, import("@nestjs/terminus").HealthIndicatorStatus, Record<string, any>>> | undefined>>;
+    readiness(): Promise<import("@nestjs/terminus").HealthCheckResult<import("@nestjs/terminus").HealthIndicatorResult<string, import("@nestjs/terminus").HealthIndicatorStatus, Record<string, any>> & import("@nestjs/terminus").HealthIndicatorResult<"user-service"> & import("@nestjs/terminus").HealthIndicatorResult<"auth-service">, Partial<import("@nestjs/terminus").HealthIndicatorResult<string, import("@nestjs/terminus").HealthIndicatorStatus, Record<string, any>> & import("@nestjs/terminus").HealthIndicatorResult<"user-service"> & import("@nestjs/terminus").HealthIndicatorResult<"auth-service">> | undefined, Partial<import("@nestjs/terminus").HealthIndicatorResult<string, import("@nestjs/terminus").HealthIndicatorStatus, Record<string, any>> & import("@nestjs/terminus").HealthIndicatorResult<"user-service"> & import("@nestjs/terminus").HealthIndicatorResult<"auth-service">> | undefined>>;
+}

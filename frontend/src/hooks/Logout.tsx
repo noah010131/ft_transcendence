@@ -31,7 +31,7 @@ export const useLogout = () => {
       setUser(null);
       if (isGuest) exitGuestMode();
       navigate('/login');
-	  console.log('로그아웃 성공');
+	  //console.log('로그아웃 성공');
     }
   };
 

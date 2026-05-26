@@ -1,0 +1,23 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.WIN_SCORE = exports.INITIAL_BALL_SPEED_Y = exports.INITIAL_BALL_SPEED_X = exports.BALL_SIZE = exports.BALL_RADIUS = exports.PADDLE_SPEED = exports.PADDLE_MARGIN = exports.PADDLE_HEIGHT = exports.PADDLE_WIDTH = exports.BOARD_HEIGHT = exports.BOARD_WIDTH = exports.GAME_INVITE_WAKEUP_CHANNEL = exports.GAME_INVITE_FRIEND_EVENT = exports.GAME_MATCH_CANCELED_EVENT = exports.GAME_READY_EVENT = exports.GAME_OVER_EVENT = exports.GAME_STATE_EVENT = exports.GAME_MOVE_PADDLE_EVENT = exports.GAME_JOIN_QUEUE_EVENT = void 0;
+exports.GAME_JOIN_QUEUE_EVENT = 'join_queue';
+exports.GAME_MOVE_PADDLE_EVENT = 'move_paddle';
+exports.GAME_STATE_EVENT = 'game_state';
+exports.GAME_OVER_EVENT = 'game_over';
+exports.GAME_READY_EVENT = 'ready';
+exports.GAME_MATCH_CANCELED_EVENT = 'match_canceled';
+exports.GAME_INVITE_FRIEND_EVENT = 'invite_friend';
+exports.GAME_INVITE_WAKEUP_CHANNEL = 'game.invite.wakeup';
+exports.BOARD_WIDTH = 1000;
+exports.BOARD_HEIGHT = 600;
+exports.PADDLE_WIDTH = 15;
+exports.PADDLE_HEIGHT = 100;
+exports.PADDLE_MARGIN = 20;
+exports.PADDLE_SPEED = 10;
+exports.BALL_RADIUS = 10;
+exports.BALL_SIZE = exports.BALL_RADIUS * 2;
+exports.INITIAL_BALL_SPEED_X = 7;
+exports.INITIAL_BALL_SPEED_Y = 4;
+exports.WIN_SCORE = 5;
+//# sourceMappingURL=game-engine.constants.js.map

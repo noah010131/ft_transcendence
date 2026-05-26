@@ -74,7 +74,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect, On
             status: event.publicStatus, 
           });
           
-          console.log(`Subscription [Presence Update] User ${event.userId} is now ${event.publicStatus}`);
+          //console.log(`Subscription [Presence Update] User ${event.userId} is now ${event.publicStatus}`);
         } catch (error) {
           console.error(`[Redis Sub Error] 메시지 파싱 실패: ${error.message}`);
         }
@@ -82,7 +82,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect, On
     });
   }
   async handleConnection(client: Socket) {
-    console.log('소캣 chat-gateway 도착');
+    //console.log('소캣 chat-gateway 도착');
     try {
       const userId = this.extractUserId(client);
       if (!userId) {
@@ -95,12 +95,12 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect, On
       await this.chatService.saveSocketId(userId, client.id);
       
       this.activeUsersCount++;
-      console.log(`[Chat] 유저 온라인: ${userId} (현재 접속자: ${this.activeUsersCount})`);
+      //console.log(`[Chat] 유저 온라인: ${userId} (현재 접속자: ${this.activeUsersCount})`);
       
       if (this.activeUsersCount === 1 && !this.isSubscribed) {
         await this.redisSub.subscribe(PRESENCE_UPDATED_CHANNEL);
         this.isSubscribed = true;
-        console.log('[Redis] 첫 채팅 유저 접속 - 구독 활성화');
+        //console.log('[Redis] 첫 채팅 유저 접속 - 구독 활성화');
       }
       
     } catch (error: any) {
@@ -122,13 +122,13 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect, On
     }
 
     try {
-      console.log(`[DM Request] From: ${from} -> To: ${to}`);
+      //console.log(`[DM Request] From: ${from} -> To: ${to}`);
       const chatLog = await this.chatService.processMessage(from, to, message);
 
       const targetSocketId = await this.chatService.getUserSocketId(to);
       if (targetSocketId) {
         this.server.to(targetSocketId).emit('new_dm', chatLog);
-        console.log(`[Real-time Push] Sent to ${to}`);
+        //console.log(`[Real-time Push] Sent to ${to}`);
       }
 
       client.emit('send_success', { messageId: chatLog.id });
@@ -145,13 +145,13 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect, On
         await this.chatService.removeSocketId(userId);
         
         this.activeUsersCount--;
-        console.log(`[Disconnected] User: ${userId} (남은 접속자: ${this.activeUsersCount})`);
+        //console.log(`[Disconnected] User: ${userId} (남은 접속자: ${this.activeUsersCount})`);
 
         if (this.activeUsersCount <= 0 && this.isSubscribed) {
           await this.redisSub.unsubscribe(PRESENCE_UPDATED_CHANNEL);
           this.isSubscribed = false;
           this.activeUsersCount = 0; // 음수 방지 가드
-          console.log('[Redis] 접속 유저 없음 - 구독 해제');
+          //console.log('[Redis] 접속 유저 없음 - 구독 해제');
         }
       } catch (err: any) {
         console.error(`[Redis Error] 오프라인 상태 변경 실패: ${err.message}`);
@@ -169,7 +169,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 //         throw new Error('메시지 ID가 누락되었습니다.');
 //       }
 
-//       console.log(`[Read Request] User: ${userId} -> Message: ${payload.messageId}`);
+//       //console.log(`[Read Request] User: ${userId} -> Message: ${payload.messageId}`);
 
 //       // 2. Service를 호출하여 DB 상태 변경 (isRead: false -> true)
 //       // 이 함수는 chat.service.ts에 구현되어 있어야 합니다.

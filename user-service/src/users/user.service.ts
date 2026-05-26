@@ -49,7 +49,7 @@ export class UserService {
       role,
       });
 
-      console.log('유저 db생성', { id, role });
+      //console.log('유저 db생성', { id, role });
       return await this.userRepository.save(newUser);
     }
     catch (error)
@@ -86,13 +86,13 @@ export class UserService {
       
       // 4. 파일이 실제로 없으면 DB 업데이트
       if (!fs.existsSync(filePath)) {
-        console.log(`📂 파일 없음: ${fileName}. 기본값으로 복구.`);
+        //console.log(`📂 파일 없음: ${fileName}. 기본값으로 복구.`);
         user.userPhoto = DEFAULT_PHOTO_PATH;
         await this.userRepository.save(user);
       }
     }
     }
-    console.log('[getme] 성공', user.nickname);
+    //console.log('[getme] 성공', user.nickname);
     return user;
   }
 
@@ -132,7 +132,7 @@ export class UserService {
     );
 
     // 3. 업데이트된 최신 유저 정보를 다시 가져와서 반환
-    console.log('[updateProfile] update 성공', user.userPhoto);
+    //console.log('[updateProfile] update 성공', user.userPhoto);
     return await this.userRepository.findOne({ where: { userId: user.userId } });
   }
 

@@ -105,7 +105,7 @@ export const usePresenceSocket = (
     socket.on('connect', () => {
       // 연결 직후에는 비의도 해제 플래그 상태로 복귀시켜 이후 끊김을 정확히 분류한다.
       intentionalDisconnectRef.current = false;
-      console.log('[Presence] 연결 성공', {
+      //console.log('[Presence] 연결 성공', {
         userId: currentUserId,
         socketId: socket.id,
       });
@@ -117,12 +117,12 @@ export const usePresenceSocket = (
     socket.on('disconnect', (reason) => {
       // 의도적 종료 플래그 기준으로 "로그아웃 해제"와 "끊김 해제"를 구분해 기록한다.
       if (intentionalDisconnectRef.current) {
-        console.log('[Presence] 연결 해제: 로그아웃/의도적 종료', {
+        //console.log('[Presence] 연결 해제: 로그아웃/의도적 종료', {
           userId: currentUserId,
           reason,
         });
       } else {
-        console.log('[Presence] 연결 해제: 끊김/비의도 종료', {
+        //console.log('[Presence] 연결 해제: 끊김/비의도 종료', {
           userId: currentUserId,
           reason,
         });
@@ -149,7 +149,7 @@ export const usePresenceSocket = (
     // 본인이 target 인 경우에만 GameContext 가 게임 소켓을 활성화하도록 윈도우 이벤트로 재발행.
     socket.on('game.invite', (event: GameInvitePayload) => {
       if (!event?.targetUserId || event.targetUserId !== currentUserId) return;
-      console.log('[Presence] game.invite 수신:', event);
+      //console.log('[Presence] game.invite 수신:', event);
       window.dispatchEvent(
         new CustomEvent(GAME_INVITE_RECEIVED_EVENT, {
           detail: event,

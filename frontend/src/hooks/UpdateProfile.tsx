@@ -46,7 +46,7 @@ export const useUpdateProfile = () => {
         const translated = (messages.errors as any)[response.message] || messages.errors.SERVER_ERROR;
         
         setAlertMsg(translated);
-        console.log("프로필 수정 실패 사유:", response.message);
+        //console.log("프로필 수정 실패 사유:", response.message);
       }
     } catch (error) {
       console.error("프로필 수정 에러:", error);

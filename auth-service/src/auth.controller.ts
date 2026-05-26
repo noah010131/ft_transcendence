@@ -49,7 +49,7 @@ export class AuthController {
     @Req() request: express.Request,
     @Res({ passthrough: true }) response: Response,
   ) {
-    console.log('[login]프론트에서 온 데이터:', loginData);
+    //console.log('[login]프론트에서 온 데이터:', loginData);
     const result = await this.authService.login(loginData, {
       userAgent: request.headers['user-agent'],
       ipAddress: request.ip,
@@ -65,14 +65,14 @@ export class AuthController {
         ...baseCookieOptions,
         maxAge: result.refreshTokenMaxAgeMs,
       });
-      console.log('[인증컨트롤러] 새 쿠키(access/refresh) 설정 완료');
+      //console.log('[인증컨트롤러] 새 쿠키(access/refresh) 설정 완료');
     }
 
     return result;
   }
 	@Post('signup')
 		async signUp(@Body() userData: any) {
-    	console.log('[signup]프론트에서 온 데이터:', userData);
+    	//console.log('[signup]프론트에서 온 데이터:', userData);
 		return await this.authService.signUp(userData);
 	}
 
@@ -81,7 +81,7 @@ export class AuthController {
     @Req() request: express.Request,
     @Res({ passthrough: true }) response: Response,
   ){
-    console.log('[인증컨트롤러] 리프레시 요청 수신', { hasRefreshToken: Boolean(request.cookies?.refreshToken),});
+    //console.log('[인증컨트롤러] 리프레시 요청 수신', { hasRefreshToken: Boolean(request.cookies?.refreshToken),});
 
     const refreshToken = request.cookies?.refreshToken;
     const result = await this.authService.refresh(refreshToken, {
@@ -89,7 +89,7 @@ export class AuthController {
       ipAddress: request.ip,
     });
 
-    console.log('[인증컨트롤러] 리프레시 처리 결과', { success: result.success, message: result.message,});
+    //console.log('[인증컨트롤러] 리프레시 처리 결과', { success: result.success, message: result.message,});
 
 
     if (result.success) {
@@ -128,7 +128,7 @@ export class AuthController {
       // 의도적으로 maxAge 생략 → session cookie. 탭 닫으면 사라짐.
       response.cookie('accessToken', result.accessToken, baseCookieOptions);
       response.cookie('refreshToken', result.refreshToken, baseCookieOptions);
-      console.log('[게스트컨트롤러] 게스트 session cookie 설정 완료');
+      //console.log('[게스트컨트롤러] 게스트 session cookie 설정 완료');
     }
 
     return result;

@@ -18,6 +18,6 @@ async function bootstrap() {
 
 //   await app.listen(process.env.PORT ?? 3002);
 await app.listen(3002, '0.0.0.0');
-  console.log(`connect success with port 3002`);
+  //console.log(`connect success with port 3002`);
 }
 bootstrap();

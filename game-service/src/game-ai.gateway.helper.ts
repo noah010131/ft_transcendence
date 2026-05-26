@@ -56,7 +56,7 @@ export class GameAiGatewayHelper {
     if (!pending) return;
     this.pendingAiMatches.delete(socketId);
     await this.gameRedis.deleteSession(pending.session.gameId);
-    console.log(
+    //console.log(
       `[Game][AI] pending session cleaned before ready socketId=${socketId} gameId=${pending.session.gameId}`,
     );
   }
@@ -104,7 +104,7 @@ export class GameAiGatewayHelper {
       void this.cleanupPendingAiMatch(client.id);
     });
 
-    console.log(
+    //console.log(
       `[Game][AI] ai match prepared userId=${userId} socketId=${client.id} gameId=${gameId}`,
     );
 
