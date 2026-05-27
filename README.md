@@ -1,29 +1,29 @@
-*This project has been created as part of the 42 curriculum by chanypar, daeunki2, suna, tronguye*
+<p align="center">
+  <a href="https://42.fr/en/homepage/" target="blank">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/8/8d/42_Logo.svg" width="150" alt="42 Logo" />
+  </a>
+</p>
 
-# 1. Team
+<p align="center">
+  <img src="https://img.shields.io/badge/Campus-Paris-000000?style=for-the-badge&logo=target" />
+  <img src="https://img.shields.io/badge/Project-ft__transcendence-7952B3?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Architecture-Microservices-FF6F61?style=for-the-badge&logo=kubernetes&logoColor=white" />
+</p>
 
-## 1.1 Team Information
-- daeunki2, suna, chanypar, tronguye
+<p align="center">
+  <b>Final Core Curriculum Project: Real-Time Multi-Service Web Platform at 42 Paris.</b><br>
+  A high-performance collaborative single-page application featuring real-time pong gameplay, chats, and dynamic matchmaking.
+</p>
 
-## 1.2 Project Management
-- We applied a Git-based branching strategy and version control workflow, and documented progress in the `team_log`.
-- We combined real-time communication through messaging apps with regular meetings to share issues quickly and make decisions efficiently.
-- Based on shared learning, we designed the architecture together and then divided schedules and implementation scope by role.
-
-## 1.3 Individual Contributions
-To maintain high agility, we did not divide the team into strict "Frontend vs Backend" roles. Instead, **all members acted as Full-Stack Developers**, but we assigned specific administrative and architectural leads to ensure project stability:
-
-1. **daeunki2 : Product Owner + Technical Lead + Project Manager + Full-Stack Developers**
-	• Founded the project group and defined the overall product vision and direction.
-  	• Led the team's sprint coordination while contributing to the full-stack implementation alongside all members.
-2. **suna : Project Manager + Technical Lead + Full-Stack Developers**
-	• Defined the technical architecture and implementation direction for their assigned services.
-	• Developed core full-stack features from end to end.
-3. **chanypar : Project Manager + Technical Lead + Full-Stack Developers**
-	• Defined the technical architecture and implementation direction for their assigned services.
-	• Developed core full-stack features from end to end.
-4. **tronguye : Technical Lead + Front Developer**
-  • Managed final bug fixing, error handling, and real-world integration testing to stabilize the application(e2e).
+<p align="center">
+  <img src="https://img.shields.io/badge/NestJS-E0234E?style=flat-square&logo=nestjs&logoColor=white">
+  <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black">
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white">
+  <img src="https://img.shields.io/badge/Socket.io-010101?style=flat-square&logo=socketdotio&logoColor=white">
+  <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white">
+  <img src="https://img.shields.io/badge/Redis-DC382D?style=flat-square&logo=redis&logoColor=white">
+  <img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white">
+</p>
 
 ---
 
