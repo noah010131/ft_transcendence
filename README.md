@@ -27,6 +27,34 @@
 
 ---
 
+# 1. Team
+
+## 1.1 Team Information
+- daeunki2, suna, chanypar, tronguye
+
+## 1.2 Project Management
+- We applied a Git-based branching strategy and version control workflow, and documented progress in the `team_log`.
+- We combined real-time communication through messaging apps with regular meetings to share issues quickly and make decisions efficiently.
+- Based on shared learning, we designed the architecture together and then divided schedules and implementation scope by role.
+
+## 1.3 Individual Contributions
+To maintain high agility, we did not divide the team into strict "Frontend vs Backend" roles. Instead, **all members acted as Full-Stack Developers**, but we assigned specific administrative and architectural leads to ensure project stability:
+
+1. **daeunki2 : Product Owner + Technical Lead + Project Manager + Full-Stack Developers**
+	• Founded the project group and defined the overall product vision and direction.
+  	• Led the team's sprint coordination while contributing to the full-stack implementation alongside all members.
+2. **suna : Project Manager + Technical Lead + Full-Stack Developers**
+	• Defined the technical architecture and implementation direction for their assigned services.
+	• Developed core full-stack features from end to end.
+3. **chanypar : Project Manager + Technical Lead + Full-Stack Developers**
+	• Defined the technical architecture and implementation direction for their assigned services.
+	• Developed core full-stack features from end to end.
+4. **tronguye : Technical Lead + Front Developer**
+  • Managed final bug fixing, error handling, and real-world integration testing to stabilize the application(e2e).
+
+---
+
+
 # 2. Project Overview
 
 ## 2.1 Description
